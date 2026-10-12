@@ -1,121 +1,179 @@
+
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
+import BarbeariaCard from './components/BarbeariaCard'
+import { barbearias } from './data/barbearias'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pesquisa, setPesquisa] = useState('')
+
+  const resultados = barbearias.filter((barbearia) => {
+    const termo = pesquisa.trim().toLowerCase()
+
+    return (
+      barbearia.nome.toLowerCase().includes(termo) ||
+      barbearia.cidade.toLowerCase().includes(termo) ||
+      barbearia.bairro.toLowerCase().includes(termo) ||
+      barbearia.servicos.some((servico) =>
+        servico.toLowerCase().includes(termo),
+      )
+    )
+  })
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <div className="aplicacao">
+      <header className="cabecalho">
+        <a href="#inicio" className="marca">
+          <span className="marca-icone">✂</span>
+          <span>
+            BARBER <strong>CONNECT</strong>
+          </span>
+        </a>
+
+        <nav className="navegacao">
+          <a href="#inicio">Início</a>
+          <a href="#barbearias">Barbearias</a>
+          <a href="#sobre">Sobre</a>
+        </nav>
+
         <button
+          className="botao-entrar"
           type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={() => alert('A tela de login será criada posteriormente.')}
         >
-          Count is {count}
+          Entrar
         </button>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
+      <main>
+        <section className="hero" id="inicio">
+          <div className="hero-conteudo">
+            <p className="sobretitulo">SEU ESTILO COMEÇA AQUI</p>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <h1>
+              Encontre sua próxima
+              <span> barbearia favorita.</span>
+            </h1>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+            <p className="hero-descricao">
+              Descubra barbearias, compare serviços e encontre
+              o profissional ideal para o seu próximo corte.
+            </p>
+
+            <form
+              className="form-pesquisa"
+              onSubmit={(evento) => {
+                evento.preventDefault()
+                document
+                  .getElementById('barbearias')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              <span className="icone-pesquisa" aria-hidden="true">
+                ⌕
+              </span>
+
+              <input
+                type="search"
+                placeholder="Nome, cidade, bairro ou serviço..."
+                aria-label="Pesquisar barbearias por nome ou localização"
+                value={pesquisa}
+                onChange={(evento) => setPesquisa(evento.target.value)}
+              />
+
+              <button type="submit">Pesquisar</button>
+            </form>
+
+            <div className="hero-destaques">
+              <span>✓ Encontre perto de você</span>
+              <span>✓ Compare serviços e preços</span>
+            </div>
+          </div>
+
+          <div className="hero-visual" aria-hidden="true">
+            <div className="hero-selo">
+              <span>BARBER</span>
+              <strong>CONNECT</strong>
+              <div>ESTILO EM CADA DETALHE</div>
+            </div>
+          </div>
+        </section>
+
+        <section className="secao-barbearias" id="barbearias">
+          <div className="secao-cabecalho">
+            <div>
+              <p className="sobretitulo">DESCUBRA NOVOS LUGARES</p>
+              <h2>Barbearias em destaque</h2>
+              <p className="secao-descricao">
+                Encontre o lugar ideal para cuidar do seu estilo.
+              </p>
+            </div>
+
+            <span className="contador-resultados">
+              {resultados.length}{' '}
+              {resultados.length === 1 ? 'resultado' : 'resultados'}
+            </span>
+          </div>
+
+          {resultados.length > 0 ? (
+            <div className="grade-barbearias">
+              {resultados.map((barbearia) => (
+                <BarbeariaCard
+                  key={barbearia.id}
+                  barbearia={barbearia}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="estado-vazio">
+              <span>⌕</span>
+              <h3>Nenhuma barbearia encontrada</h3>
+              <p>
+                Experimente pesquisar por outra cidade, bairro ou serviço.
+              </p>
+              <button
+                type="button"
+                onClick={() => setPesquisa('')}
+              >
+                Limpar pesquisa
+              </button>
+            </div>
+          )}
+        </section>
+
+        <section className="secao-proprietarios" id="sobre">
+          <div>
+            <p className="sobretitulo">VOCÊ TEM UMA BARBEARIA?</p>
+            <h2>Seu próximo cliente pode estar aqui.</h2>
+            <p>
+              Cadastre seu estabelecimento na Barber Connect e
+              apresente seus serviços a novos clientes.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() =>
+              alert('O cadastro de barbearias será implementado depois.')
+            }
+          >
+            Quero cadastrar minha barbearia
+          </button>
+        </section>
+      </main>
+
+      <footer className="rodape">
+        <a href="#inicio" className="marca">
+          <span className="marca-icone">✂</span>
+          <span>
+            BARBER <strong>CONNECT</strong>
+          </span>
+        </a>
+
+        <p>Encontre seu estilo. Agende seu momento.</p>
+        <span>Projeto acadêmico · Versão inicial</span>
+      </footer>
+    </div>
   )
 }
 
