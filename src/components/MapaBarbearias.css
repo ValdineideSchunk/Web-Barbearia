@@ -1,0 +1,235 @@
+
+/* Seção do mapa */
+.mapa-secao {
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+}
+
+/* Cabeçalho do mapa */
+.mapa-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.mapa-cabecalho h2 {
+  margin: 10px 0;
+  color: var(--texto, #f5f1e9);
+  font-size: clamp(24px, 3vw, 32px);
+}
+
+.mapa-cabecalho p {
+  margin: 0;
+  color: var(--texto-suave, #aaa59c);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.texto-destaque {
+  color: var(--dourado, #c9a66b);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Botão de localização */
+.botao-localizacao {
+  flex-shrink: 0;
+  padding: 12px 18px;
+  border: 1px solid var(--dourado, #c9a66b);
+  border-radius: 7px;
+  color: var(--dourado-claro, #e4c993);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.botao-localizacao:hover {
+  color: #17130d;
+  background: var(--dourado, #c9a66b);
+}
+
+/* Mensagem de erro da geolocalização */
+.mapa-erro {
+  margin-bottom: 14px;
+  padding: 12px 15px;
+  border: 1px solid #713b3b;
+  border-radius: 6px;
+  color: #ffaaaa;
+  background: #261818;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Mapa interativo do Leaflet */
+.mapa-interativo {
+  width: 100%;
+  height: 360px;
+  min-width: 0;
+  border: 1px solid #494239;
+  border-radius: 12px;
+  background: #191919;
+  z-index: 0;
+}
+
+/* Marcador vermelho da localização do usuário */
+.icone-localizacao-usuario {
+  background: transparent;
+  border: none;
+}
+
+.ponto-usuario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ff3737;
+  border-radius: 50%;
+  background: rgba(255, 55, 55, 0.25);
+  box-shadow: 0 0 10px rgba(255, 55, 55, 0.6);
+}
+
+.ponto-usuario-centro {
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #ff3737;
+}
+
+/* Mensagem permanentemente visível */
+.tooltip-localizacao-usuario {
+  padding: 7px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: #222;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão Ver barbearia */
+.botao-ver-barbearia {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 9px 14px;
+  border: 1px solid #86c98b;
+  border-radius: 6px;
+  color: #173b20;
+  background: #a8e6ad;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.botao-ver-barbearia:hover {
+  background: #8bdc94;
+  transform: translateY(-1px);
+}
+
+.botao-ver-barbearia:active {
+  transform: translateY(0);
+}
+
+/* Ajustes para tablets e celulares */
+@media (max-width: 700px) {
+  .mapa-secao {
+    padding: 0;
+  }
+
+  .mapa-cabecalho {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .botao-localizacao {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .mapa-interativo {
+    height: 340px;
+  }
+}
+
+/* Contêiner para posicionar o loading sobre o mapa */
+.mapa-container {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Camada de carregamento */
+.mapa-loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border: 1px solid #494239;
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.82);
+  backdrop-filter: blur(3px);
+
+  text-align: center;
+  color: var(--texto, #f5f1e9);
+}
+
+/* Círculo dourado animado */
+.mapa-loading-spinner {
+  width: 42px;
+  height: 42px;
+  box-sizing: border-box;
+
+  border: 4px solid rgba(201, 166, 107, 0.25);
+  border-top-color: var(--dourado, #c9a66b);
+  border-radius: 50%;
+
+  animation: mapa-girar 0.8s linear infinite;
+}
+
+.mapa-loading-overlay p {
+  margin: 4px 0 0;
+  color: var(--dourado-claro, #e4c993);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mapa-loading-overlay span {
+  max-width: 280px;
+  padding: 0 12px;
+  color: var(--texto-suave, #aaa59c);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@keyframes mapa-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Evita cliques repetidos enquanto localiza */
+.botao-localizacao:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}

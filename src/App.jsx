@@ -2,10 +2,13 @@
 import { useState } from 'react'
 import './App.css'
 import BarbeariaCard from './components/BarbeariaCard'
+import MapaBarbearias from './components/MapaBarbearias'
 import { barbearias } from './data/barbearias'
 
 function App() {
   const [pesquisa, setPesquisa] = useState('')
+  const [barbeariaSelecionadaId, setBarbeariaSelecionadaId] =
+    useState(null)
 
   const resultados = barbearias.filter((barbearia) => {
     const termo = pesquisa.trim().toLowerCase()
@@ -19,6 +22,15 @@ function App() {
       )
     )
   })
+
+  function selecionarBarbearia(barbearia) {
+    setBarbeariaSelecionadaId(barbearia.id)
+  }
+
+  function limparPesquisa() {
+    setPesquisa('')
+    setBarbeariaSelecionadaId(null)
+  }
 
   return (
     <div className="aplicacao">
@@ -39,7 +51,9 @@ function App() {
         <button
           className="botao-entrar"
           type="button"
-          onClick={() => alert('A tela de login será criada posteriormente.')}
+          onClick={() =>
+            alert('A tela de login será criada posteriormente.')
+          }
         >
           Entrar
         </button>
@@ -64,6 +78,7 @@ function App() {
               className="form-pesquisa"
               onSubmit={(evento) => {
                 evento.preventDefault()
+
                 document
                   .getElementById('barbearias')
                   ?.scrollIntoView({ behavior: 'smooth' })
@@ -78,8 +93,23 @@ function App() {
                 placeholder="Nome, cidade, bairro ou serviço..."
                 aria-label="Pesquisar barbearias por nome ou localização"
                 value={pesquisa}
-                onChange={(evento) => setPesquisa(evento.target.value)}
+                onChange={(evento) => {
+                  setPesquisa(evento.target.value)
+                  setBarbeariaSelecionadaId(null)
+                }}
               />
+
+              {pesquisa.length > 0 && (
+                <button
+                  type="button"
+                  className="botao-limpar-pesquisa"
+                  aria-label="Limpar pesquisa"
+                  title="Limpar pesquisa"
+                  onClick={limparPesquisa}
+                >
+                  ×
+                </button>
+              )}
 
               <button type="submit">Pesquisar</button>
             </form>
@@ -90,12 +120,12 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-visual" aria-hidden="true">
-            <div className="hero-selo">
-              <span>BARBER</span>
-              <strong>CONNECT</strong>
-              <div>ESTILO EM CADA DETALHE</div>
-            </div>
+          <div className="hero-mapa">
+            <MapaBarbearias
+              barbearias={resultados}
+              barbeariaSelecionadaId={barbeariaSelecionadaId}
+              onSelecionarBarbearia={selecionarBarbearia}
+            />
           </div>
         </section>
 
@@ -121,6 +151,12 @@ function App() {
                 <BarbeariaCard
                   key={barbearia.id}
                   barbearia={barbearia}
+                  selecionada={
+                    barbeariaSelecionadaId === barbearia.id
+                  }
+                  onSelecionar={() => {
+                    selecionarBarbearia(barbearia)
+                  }}
                 />
               ))}
             </div>
@@ -131,10 +167,8 @@ function App() {
               <p>
                 Experimente pesquisar por outra cidade, bairro ou serviço.
               </p>
-              <button
-                type="button"
-                onClick={() => setPesquisa('')}
-              >
+
+              <button type="button" onClick={limparPesquisa}>
                 Limpar pesquisa
               </button>
             </div>
@@ -154,7 +188,9 @@ function App() {
           <button
             type="button"
             onClick={() =>
-              alert('O cadastro de barbearias será implementado depois.')
+              alert(
+                'O cadastro de barbearias será implementado depois.',
+              )
             }
           >
             Quero cadastrar minha barbearia

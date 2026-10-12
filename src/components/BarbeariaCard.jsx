@@ -1,7 +1,17 @@
 
-function BarbeariaCard({ barbearia }) {
+import './BarbeariaCard.css'
+
+function BarbeariaCard({
+    barbearia,
+    selecionada = false,
+    onSelecionar,
+}) {
     return (
-        <article className="barbearia-card">
+        <article
+            id={`barbearia-${barbearia.id}`}
+            className={`barbearia-card ${selecionada ? 'barbearia-card-selecionada' : ''}`}
+            onClick={onSelecionar}
+        >
             <div className="card-imagem-container">
                 <img
                     src={barbearia.imagem}
@@ -44,9 +54,10 @@ function BarbeariaCard({ barbearia }) {
                     <button
                         type="button"
                         className="botao-detalhes"
-                        onClick={() =>
-                            alert(`Em breve: detalhes de ${barbearia.nome}`)
-                        }
+                        onClick={(evento) => {
+                            evento.stopPropagation()
+                            onSelecionar?.()
+                        }}
                     >
                         Ver barbearia
                     </button>

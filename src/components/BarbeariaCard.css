@@ -1,0 +1,140 @@
+
+.barbearia-card {
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #191919;
+  border: 1px solid #34312b;
+  border-radius: 10px;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+
+.barbearia-card:hover {
+  transform: translateY(-4px);
+  border-color: #94794c;
+}
+
+/* Imagem da barbearia */
+.card-imagem-container {
+  height: 170px;
+  position: relative;
+  overflow: hidden;
+  background: #29251f;
+}
+
+.card-imagem {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.card-avaliacao {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 9px;
+  border-radius: 5px;
+  color: #f4e3bb;
+  background: rgb(16 16 16 / 90%);
+  font-size: 12px;
+}
+
+/* Informações da barbearia */
+.card-conteudo {
+  flex: 1;
+  padding: 17px;
+  display: flex;
+  flex-direction: column;
+}
+
+.barbearia-localizacao {
+  margin: 0 0 7px;
+  color: #c9a66b;
+  font-size: 11px;
+}
+
+.card-conteudo h3 {
+  margin: 0;
+  color: #f5f1e9;
+  font-size: 17px;
+}
+
+.card-avaliacoes {
+  margin: 7px 0 13px;
+  color: #aaa59c;
+  font-size: 12px;
+}
+
+/* Serviços disponíveis */
+.card-servicos {
+  min-height: 53px;
+  display: flex;
+  align-content: start;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.card-servicos span {
+  padding: 5px 7px;
+  border: 1px solid #3b3730;
+  border-radius: 4px;
+  color: #c7c0b4;
+  font-size: 10px;
+}
+
+/* Preço e botão */
+.card-rodape {
+  margin-top: auto;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid #34312b;
+}
+
+.card-rodape p {
+  margin: 0;
+  color: #b9b2a7;
+  font-size: 12px;
+}
+
+.card-rodape strong {
+  color: #f5f1e9;
+  font-size: 17px;
+}
+
+.botao-detalhes {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #806b45;
+  border-radius: 5px;
+  color: #e4c993;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.botao-detalhes:hover {
+  color: #17130d;
+  background: #c9a66b;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 700px) {
+  .card-imagem-container {
+    height: 210px;
+  }
+}
+
+.barbearia-card-selecionada {
+  border-color: #c9a66b;
+  box-shadow: 0 0 0 2px rgb(201 166 107 / 25%);
+}
